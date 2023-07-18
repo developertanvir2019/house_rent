@@ -5,6 +5,10 @@ import DashBoard from "../pages/DashBoard";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import PrivateRoute from "./privateRoute";
+import AddHouse from "../Components/AddHouse";
+import MyHouses from "../Components/MyHouses";
+import BookedHouse from "../Components/BookedHouse";
+import EditHouse from "../Components/EditHouse";
 
 export const routes = createBrowserRouter([
     {
@@ -17,7 +21,25 @@ export const routes = createBrowserRouter([
             },
             {
                 path: '/dashboard',
-                element: <PrivateRoute> <DashBoard /></PrivateRoute>
+                element: <PrivateRoute> <DashBoard /></PrivateRoute>,
+                children: [
+                    {
+                        path: '/dashboard/add',
+                        element: <AddHouse />
+                    },
+                    {
+                        path: '/dashboard/edit/:id',
+                        element: <EditHouse />
+                    },
+                    {
+                        path: '/dashboard',
+                        element: <MyHouses />
+                    },
+                    {
+                        path: '/dashboard/bookedHouse',
+                        element: <BookedHouse />
+                    },
+                ]
             },
             {
                 path: '/login',
