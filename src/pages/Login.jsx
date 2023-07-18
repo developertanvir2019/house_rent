@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const Navigate = useNavigate();
     const [loginData, setLoginData] = useState({
         phoneNumber: '',
         password: '',
@@ -10,10 +12,6 @@ const Login = () => {
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        // You can perform form validation here if needed
-        // Submit the loginData to the server for authentication
-        // You can use axios or fetch to make an API call to your backend
-        // Example with fetch:
 
         fetch('http://localhost:5000/api/login', {
             method: 'POST',
@@ -26,6 +24,13 @@ const Login = () => {
             .then((data) => {
                 // Handle the response, e.g., save the JWT token in local storage or session storage
                 console.log(data.token);
+                if (data?.token) {
+                    localStorage.setItem('jwtToken', data.token);
+                    toast.success('Congratulations!!! Log in success')
+                    Navigate('/dashboard')
+                } else {
+                    toast.error('Number or password is incorrect')
+                }
             })
             .catch((error) => {
                 console.error('Error during login:', error);
