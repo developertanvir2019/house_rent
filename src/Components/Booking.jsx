@@ -9,6 +9,7 @@ const Booking = () => {
     const [house, setHouse] = useState(null);
     const [loginData, setloginData] = useState(null);
     const [userData, setUserData] = useState(null);
+    const [bookings, setBookings] = useState(null);
     const [formData, setFormData] = useState({
         name: house?.name,
         address: house?.address,
@@ -63,21 +64,40 @@ const Booking = () => {
         fetchHouseDetails();
     }, [id]);
 
+
+    useEffect(() => {
+        const fetchBookings = async () => {
+            try {
+                const response = await axios.get(`https://assignment-server-10.vercel.app/api/booking/${loginData?.phoneNumber}`);
+                setBookings(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchBookings();
+    }, [loginData?.phoneNumber]);
+
+
     const Navigate = useNavigate()
     const handleSubmit = (event) => {
-        event.preventDefault();
-        axios.post('https://assignment-server-10.vercel.app/api/booking', formData)
-            .then((response) => {
-                console.log(response.data.message);
-                toast.success(response?.data?.message)
-                Navigate('/')
-                // Reset the form after successful submission
-            })
-            .catch((error) => {
-                console.error('52', error);
-                toast.error('server error !! please fillUp with valid data')
-            });
-        // if (!bookingsData?.length < 2) {
+        event.preventDefault()
+        if (bookings?.length >= 2) {
+            toast.error("can't add more than 2 house,If you need you can remove from dashboard")
+        } else {
+            event.preventDefault();
+            axios.post('https://assignment-server-10.vercel.app/api/booking', formData)
+                .then((response) => {
+                    console.log(response.data.message);
+                    toast.success(response?.data?.message)
+                    Navigate('/')
+                    // Reset the form after successful submission
+                })
+                .catch((error) => {
+                    console.error('52', error);
+                    toast.error('server error !! please fillUp with valid data')
+                });
+        }
+        // if (!bookings?.length < 2) {
         //     toast.error("can't add more than 2 house,If you need you can remove from dashboard")
         // } else {
         //     axios.post('https://assignment-server-10.vercel.app/api/booking', formData)
