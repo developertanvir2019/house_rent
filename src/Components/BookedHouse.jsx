@@ -1,10 +1,10 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react'
-import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const BookedHouse = () => {
     const [bookedHouses, setBookedHouses] = useState([])
+    console.log(bookedHouses);
     const [loginData, setLoginData] = useState(null)
     useEffect(() => {
         // Decode the JWT token and set the user data in the state when the component mounts

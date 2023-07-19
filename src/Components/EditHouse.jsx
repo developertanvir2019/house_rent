@@ -22,7 +22,6 @@ const EditHouse = () => {
         description: house?.description,
         userPhone: house?.userPhone,
     });
-    console.log(formData);
     useEffect(() => {
         const fetchHouseDetails = async () => {
             try {

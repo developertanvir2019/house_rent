@@ -9,6 +9,7 @@ import AddHouse from "../Components/AddHouse";
 import MyHouses from "../Components/MyHouses";
 import BookedHouse from "../Components/BookedHouse";
 import EditHouse from "../Components/EditHouse";
+import Booking from "../Components/Booking";
 
 export const routes = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ export const routes = createBrowserRouter([
             {
                 path: '/register',
                 element: <SignUp />
+            },
+            {
+                path: '/booking/:id',
+                element: <Booking />
             },
         ]
     }

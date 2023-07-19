@@ -2,7 +2,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AllHouses = ({ house }) => {
     const [bookingsData, setBookingsData] = useState([])
@@ -69,36 +69,7 @@ const AllHouses = ({ house }) => {
     //     };
     //     fetchBookings();
     // }, [userData?.phoneNumber]);
-    console.log(formData);
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        axios.post('https://assignment-server-10.vercel.app/api/booking', formData)
-            .then((response) => {
-                console.log(response.data.message);
-                toast.success(response?.data?.message)
-                Navigate('/')
-                // Reset the form after successful submission
-            })
-            .catch((error) => {
-                console.error('52', error);
-                toast.error('server error !! please fillUp with valid data')
-            });
-        // if (!bookingsData?.length < 2) {
-        //     toast.error("can't add more than 2 house,If you need you can remove from dashboard")
-        // } else {
-        //     axios.post('https://assignment-server-10.vercel.app/api/booking', formData)
-        //         .then((response) => {
-        //             console.log(response.data.message);
-        //             toast.success(response?.data?.message)
-        //             Navigate('/')
-        //             // Reset the form after successful submission
-        //         })
-        //         .catch((error) => {
-        //             console.error('52', error);
-        //             toast.error('server error !! please fillUp with valid data')
-        //         });
-        // }
-    };
+
 
 
 
@@ -124,23 +95,9 @@ const AllHouses = ({ house }) => {
                     <p className="font-semibold">Bedrooms : {house?.bedrooms} pic</p>
                     <p className="font-semibold">Bathrooms : {house?.bathrooms} pic</p>
                     <p className="font-semibold">Size : {house?.roomSize}</p>
-                    {!isRenter ? <label className='btn btn-outline btn-success mt-2' htmlFor="my_modal_7">Book Now</label> :
+                    {!isRenter ? <Link to={`/booking/${house._id}`} className='btn btn-outline btn-success mt-2' htmlFor="my_modal_7">Book Now</Link> :
                         <button disabled className='btn btn-outline btn-success mt-2'>Book Now</button>}
                 </div>
-            </div>
-
-            <input type="checkbox" id="my_modal_7" className="modal-toggle" />
-            <div className="modal">
-                <div className="modal-box">
-                    <h3 className='text-2xl font-semibold pb-2'>book Now</h3>
-                    <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-4'>
-                        <input readOnly defaultValue={userData?.fullName} name='name' type="text" placeholder="Your name" className="input input-bordered w-full " />
-                        <input readOnly defaultValue={userData?.email} name='email' type="text" placeholder="Email address" className="input input-bordered w-full " />
-                        <input onChange={(e) => setFormData({ ...formData, userPhone: e.target.value })} required name='phone' type="number" placeholder="Phone number" className="input input-bordered w-full " /> <br />
-                        <input className='btn btn-accent btn-outline w-full ' type="submit" value='book Now' />
-                    </form>
-                </div>
-                <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
             </div>
 
         </>
