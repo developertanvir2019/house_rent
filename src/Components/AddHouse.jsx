@@ -79,7 +79,7 @@ const AddHouse = () => {
 
     return (
         <div>
-            <h4 className="text-2xl font-semibold text-orange-500 mt-3">Add House</h4>
+            <h4 className="text-2xl font-semibold text-accent mt-3">Add House</h4>
 
             <div>
                 <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 p-4 border rounded-lg shadow-md">
@@ -222,7 +222,7 @@ const AddHouse = () => {
                     <div className="mt-4">
                         <button
                             type="submit"
-                            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+                            className="btn btn-accent text-white"
                         >
                             Add Home
                         </button>

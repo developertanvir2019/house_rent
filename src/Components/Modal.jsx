@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const AllHouses = ({ house }) => {
-    const [bookingsData, setBookingsData] = useState([])
+const Modal = ({ house }) => {
+    const Navigate = useNavigate()
+    const [loginData, setloginData] = useState(null);
+    const [userData, setUserData] = useState(null);
     const [formData, setFormData] = useState({
         name: house?.name,
         address: house?.address,
@@ -23,10 +25,6 @@ const AllHouses = ({ house }) => {
         userName: '',
         queryPhone: '',
     });
-    const Navigate = useNavigate()
-    const [loginData, setloginData] = useState(null);
-    const [userData, setUserData] = useState(null);
-    const isRenter = userData?.role === 'House Owner';
     useEffect(() => {
         if (!loginData?.phoneNumber) {
             setUserData(null);
@@ -55,21 +53,6 @@ const AllHouses = ({ house }) => {
         }
     }, []);
 
-
-    // get booking data for check the total booking
-
-    // useEffect(() => {
-    //     const fetchBookings = async () => {
-    //         try {
-    //             const response = await axios.get(`http://localhost:5000/api/booking/${userData?.phoneNumber}`);
-    //             setBookingsData(response.data);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     };
-    //     fetchBookings();
-    // }, [userData?.phoneNumber]);
-    console.log(formData);
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post('http://localhost:5000/api/booking', formData)
@@ -99,40 +82,13 @@ const AllHouses = ({ house }) => {
         //         });
         // }
     };
-
-
-
-
-
-
-
+    console.log('aci', formData);
     return (
         <>
-            <div key={house?._id} className='grid grid-cols-3 my-6 h-44'>
-                <div>
-                    <img className='h-44 w-full' src={house?.picture} alt="" />
-                </div>
-                <div className='bg-gray-200 py-3'>
-                    <h3 className="text-xl font-semibold">{house?.name}</h3>
-                    <p className="font-semibold">{house?.description}</p>
-                    <p className="font-semibold">{house?.address} ,{house?.city}</p>
-                    <p className="font-semibold">Phone: {house?.phoneNumber}</p>
-                    <p className="font-semibold">Cost: <span className='text-green-600'>{house?.rentPerMonth} Tk</span></p>
-
-                </div>
-                <div className='bg-gray-200 py-3'>
-                    <p className="font-semibold">Bedrooms : {house?.bedrooms} pic</p>
-                    <p className="font-semibold">Bathrooms : {house?.bathrooms} pic</p>
-                    <p className="font-semibold">Size : {house?.roomSize}</p>
-                    {!isRenter ? <label className='btn btn-outline btn-success mt-2' htmlFor="my_modal_7">Book Now</label> :
-                        <button disabled className='btn btn-outline btn-success mt-2'>Book Now</button>}
-                </div>
-            </div>
-
             <input type="checkbox" id="my_modal_7" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box">
-                    <h3 className='text-2xl font-semibold pb-2'>book Now</h3>
+                    <h3 className='text-2xl font-semibold pb-2'>book Now {house?.name}</h3>
                     <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-4'>
                         <input readOnly defaultValue={userData?.fullName} name='name' type="text" placeholder="Your name" className="input input-bordered w-full " />
                         <input readOnly defaultValue={userData?.email} name='email' type="text" placeholder="Email address" className="input input-bordered w-full " />
@@ -142,9 +98,8 @@ const AllHouses = ({ house }) => {
                 </div>
                 <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
             </div>
-
         </>
     )
 }
 
-export default AllHouses
+export default Modal

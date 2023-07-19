@@ -20,7 +20,6 @@ const Home = () => {
 
     // search functionality 
     const [searchText, setSearchText] = useState('')
-    console.log(searchText);
 
     return (
         <div>
