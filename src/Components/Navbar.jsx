@@ -28,12 +28,12 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                {
-                    !isLoggedIn ? <> <Link className="btn btn-success btn-outline mx-3" to={'/register'}>Register</Link>
-                        <Link className="btn btn-outline  btn-success" to={'/login'}>Login</Link>
-                    </> :
-                        <button onClick={handleLogout} className="btn btn-outline  btn-success" >LogOut</button>
-                }
+
+                <>
+                    <Link className="btn btn-outline  btn-success" to={'/login'}>Login</Link>
+                    <button onClick={handleLogout} className="btn btn-outline  btn-success mx-3" >LogOut</button>
+                </>
+
             </div>
         </div>
 
