@@ -1,18 +1,32 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import AllHouses from '../Components/AllHouses';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Spinner from '../Components/Spinner';
 
 const Home = () => {
 
     // get all houses
     const [houses, setHouses] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+
     useEffect(() => {
         fetchHouses();
     }, []);
+
     const fetchHouses = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/houses');
-            setHouses(response.data);
+            const response = await axios.get(`http://localhost:5000/api/houses?page=${currentPage}`);
+            const { houses: newHouses, paginationInfo } = response.data;
+
+            if (newHouses.length === 0) {
+                // No more data available
+                setHasMore(false);
+            } else {
+                setHouses((prevHouses) => [...prevHouses, ...newHouses]);
+                setCurrentPage(paginationInfo.currentPage + 1);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -47,23 +61,29 @@ const Home = () => {
                             <AllHouses house={house} />
                         )
                 } */}
+                <InfiniteScroll
+                    dataLength={houses.length}
+                    next={fetchHouses}
+                    hasMore={hasMore}
+                    loader={<Spinner />}
+                >
+                    {
+                        houses?.filter(house => {
+                            const searchTextLC = searchText?.toLowerCase();
+                            const cityMatch = house?.city?.toLowerCase().includes(searchTextLC);
+                            const bedroomsMatch = house?.bedrooms.toString().toLowerCase().includes(searchTextLC);
+                            const bathroomsMatch = house?.bathrooms.toString().toLowerCase().includes(searchTextLC);
+                            const roomSizeMatch = house?.roomSize.toString().toLowerCase().includes(searchTextLC);
+                            const availabilityDateMatch = house?.availabilityDate.toString().toLowerCase().includes(searchTextLC);
 
-                {
-                    houses?.filter(house => {
-                        const searchTextLC = searchText?.toLowerCase();
-                        const cityMatch = house?.city?.toLowerCase().includes(searchTextLC);
-                        const bedroomsMatch = house?.bedrooms.toString().toLowerCase().includes(searchTextLC);
-                        const bathroomsMatch = house?.bathrooms.toString().toLowerCase().includes(searchTextLC);
-                        const roomSizeMatch = house?.roomSize.toString().toLowerCase().includes(searchTextLC);
-                        const availabilityDateMatch = house?.availabilityDate.toString().toLowerCase().includes(searchTextLC);
-
-                        // Return true if any of the property values match the searchText (if they are not null or undefined)
-                        return cityMatch || bedroomsMatch || bathroomsMatch || roomSizeMatch || availabilityDateMatch;
-                    })
-                        .map(house =>
-                            <AllHouses house={house} />
-                        )
-                }
+                            // Return true if any of the property values match the searchText (if they are not null or undefined)
+                            return cityMatch || bedroomsMatch || bathroomsMatch || roomSizeMatch || availabilityDateMatch;
+                        })
+                            .map(house =>
+                                <AllHouses house={house} />
+                            )
+                    }
+                </InfiniteScroll>
 
             </div>
         </div>
