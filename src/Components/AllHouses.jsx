@@ -22,7 +22,6 @@ const AllHouses = ({ house }) => {
         userName: '',
         queryPhone: '',
     });
-    console.log(formData);
     const Navigate = useNavigate()
     const [loginData, setloginData] = useState(null);
     const [userData, setUserData] = useState(null);
@@ -56,20 +55,45 @@ const AllHouses = ({ house }) => {
     }, []);
 
 
+    // get booking data for check the total booking
+    const [bookings, setBookings] = useState([])
+    useEffect(() => {
+        const fetchBookings = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/booking/${loginData?.phoneNumber}`);
+                setBookings(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchBookings();
+    }, [loginData?.phoneNumber]);
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:5000/api/booking', formData)
-            .then((response) => {
-                console.log(response.data.message);
-                toast.success(response?.data?.message)
-                Navigate('/')
-                // Reset the form after successful submission
-            })
-            .catch((error) => {
-                console.error('52', error);
-                toast.error('server error !! please fillUp with valid data')
-            });
+        if (bookings?.length < 2) {
+            axios.post('http://localhost:5000/api/booking', formData)
+                .then((response) => {
+                    console.log(response.data.message);
+                    toast.success(response?.data?.message)
+                    Navigate('/')
+                    // Reset the form after successful submission
+                })
+                .catch((error) => {
+                    console.error('52', error);
+                    toast.error('server error !! please fillUp with valid data')
+                });
+        } else {
+            toast.error("can't add more than 2 house,If you need you can remove from dashboard")
+        }
     };
+
+
+
+
+
+
 
     return (
         <>
