@@ -17,7 +17,7 @@ const RenterDashboard = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/booking/${loginData?.phoneNumber}`);
+                const response = await axios.get(`https://assignment-server-10.vercel.app/api/booking/${loginData?.phoneNumber}`);
                 setBookings(response.data);
             } catch (error) {
                 console.error(error);
@@ -31,7 +31,7 @@ const RenterDashboard = () => {
         const confirmDelete = window.confirm('Are you sure you want to delete this Booking?');
         if (confirmDelete) {
             try {
-                await axios.delete(`http://localhost:5000/api/booking/${id}`);
+                await axios.delete(`https://assignment-server-10.vercel.app/api/booking/${id}`);
                 // If successful, remove the deleted house from the local state
                 setBookings((prevHouses) => prevHouses.filter((house) => house._id !== id));
                 console.log('House deleted successfully');

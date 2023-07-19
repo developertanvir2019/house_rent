@@ -51,7 +51,7 @@ const AddHouse = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        axios.post('http://localhost:5000/api/houses', formData)
+        axios.post('https://assignment-server-10.vercel.app/api/houses', formData)
             .then((response) => {
                 console.log(response.data.message);
                 toast.success(response?.data?.message)

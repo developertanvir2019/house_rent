@@ -19,7 +19,7 @@ const MyHouses = () => {
     useEffect(() => {
         const fetchHouses = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/houses/${loginData?.phoneNumber}`);
+                const response = await axios.get(`https://assignment-server-10.vercel.app/api/houses/${loginData?.phoneNumber}`);
                 setHouses(response.data);
             } catch (error) {
                 console.error(error);
@@ -33,7 +33,7 @@ const MyHouses = () => {
         const confirmDelete = window.confirm('Are you sure you want to delete this house?');
         if (confirmDelete) {
             try {
-                await axios.delete(`http://localhost:5000/api/houses/${id}`);
+                await axios.delete(`https://assignment-server-10.vercel.app/api/houses/${id}`);
                 // If successful, remove the deleted house from the local state
                 setHouses((prevHouses) => prevHouses.filter((house) => house._id !== id));
                 console.log('House deleted successfully');

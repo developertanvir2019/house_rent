@@ -26,7 +26,7 @@ const EditHouse = () => {
     useEffect(() => {
         const fetchHouseDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/house/${id}`);
+                const response = await axios.get(`https://assignment-server-10.vercel.app/api/house/${id}`);
                 setHouse(response.data);
                 setFormData(
                     {
@@ -82,7 +82,7 @@ const EditHouse = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.put(`http://localhost:5000/api/house/${id}`, formData);
+            const response = await axios.put(`https://assignment-server-10.vercel.app/api/house/${id}`, formData);
             setFormData(response.data);
             toast.success('update success')
             Navigate('/dashboard')

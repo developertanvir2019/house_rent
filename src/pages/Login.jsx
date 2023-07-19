@@ -13,7 +13,7 @@ const Login = () => {
     const handleLoginSubmit = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:5000/api/login', {
+        fetch('https://assignment-server-10.vercel.app/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

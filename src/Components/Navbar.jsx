@@ -19,7 +19,7 @@ const Navbar = () => {
                         <li className="font-semibold"><Link to={'/dashboard'}>Dashboard</Link></li>
                     </ul>
                 </div>
-                <Link to={'/'} className="btn btn-ghost normal-case text-xl">daisyUI</Link>
+                <Link to={'/'}><img className="w-20 h-12" src="https://img.freepik.com/premium-vector/house-real-estate-logo_7169-95.jpg" alt="" /></Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

@@ -13,7 +13,7 @@ const DashBoard = () => {
             setUserData(null);
             return;
         }
-        axios.get(`http://localhost:5000/api/getUserByPhoneNumber/${loginData?.phoneNumber}`)
+        axios.get(`https://assignment-server-10.vercel.app/api/getUserByPhoneNumber/${loginData?.phoneNumber}`)
             .then((response) => {
                 setUserData(response.data);
             })

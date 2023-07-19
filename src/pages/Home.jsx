@@ -17,7 +17,7 @@ const Home = () => {
 
     const fetchHouses = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/houses?page=${currentPage}`);
+            const response = await axios.get(`https://assignment-server-10.vercel.app/api/houses?page=${currentPage}`);
             const { houses: newHouses, paginationInfo } = response.data;
 
             if (newHouses.length === 0) {
@@ -41,7 +41,7 @@ const Home = () => {
             <div className="mx-8">
                 <div className="navbar bg-green-300 px-4">
                     <div className="flex-1">
-                        <a href='/' className="btn btn-ghost normal-case text-xl">daisyUI</a>
+                        <a href='/' className="btn btn-ghost normal-case text-xl">Home</a>
                     </div>
                     <div className="flex-none gap-2">
                         <div className="form-control">

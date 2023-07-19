@@ -32,7 +32,7 @@ const AllHouses = ({ house }) => {
             setUserData(null);
             return;
         }
-        axios.get(`http://localhost:5000/api/getUserByPhoneNumber/${loginData?.phoneNumber}`)
+        axios.get(`https://assignment-server-10.vercel.app/api/getUserByPhoneNumber/${loginData?.phoneNumber}`)
             .then((response) => {
                 setUserData(response.data);
                 setFormData({ ...formData, userEmail: response?.data?.email, userName: response?.data?.fullName });
@@ -61,7 +61,7 @@ const AllHouses = ({ house }) => {
     // useEffect(() => {
     //     const fetchBookings = async () => {
     //         try {
-    //             const response = await axios.get(`http://localhost:5000/api/booking/${userData?.phoneNumber}`);
+    //             const response = await axios.get(`https://assignment-server-10.vercel.app/api/booking/${userData?.phoneNumber}`);
     //             setBookingsData(response.data);
     //         } catch (error) {
     //             console.error(error);
@@ -72,7 +72,7 @@ const AllHouses = ({ house }) => {
     console.log(formData);
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:5000/api/booking', formData)
+        axios.post('https://assignment-server-10.vercel.app/api/booking', formData)
             .then((response) => {
                 console.log(response.data.message);
                 toast.success(response?.data?.message)
@@ -86,7 +86,7 @@ const AllHouses = ({ house }) => {
         // if (!bookingsData?.length < 2) {
         //     toast.error("can't add more than 2 house,If you need you can remove from dashboard")
         // } else {
-        //     axios.post('http://localhost:5000/api/booking', formData)
+        //     axios.post('https://assignment-server-10.vercel.app/api/booking', formData)
         //         .then((response) => {
         //             console.log(response.data.message);
         //             toast.success(response?.data?.message)

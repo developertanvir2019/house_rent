@@ -17,7 +17,7 @@ const BookedHouse = () => {
     useEffect(() => {
         const fetchHouses = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/ownerBooking/${loginData?.phoneNumber}`);
+                const response = await axios.get(`https://assignment-server-10.vercel.app/api/ownerBooking/${loginData?.phoneNumber}`);
                 setBookedHouses(response.data);
             } catch (error) {
                 console.error(error);
