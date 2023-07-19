@@ -52,7 +52,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: '/booking/:id',
-                element: <Booking />
+                element: <PrivateRoute><Booking /></PrivateRoute>
             },
         ]
     }
